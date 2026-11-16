@@ -4,7 +4,7 @@ import { nextCookies } from 'better-auth/next-js';
 import { admin } from 'better-auth/plugins';
 import { createAuthMiddleware, APIError } from 'better-auth/api';
 
-import { getAuthDb, getMongoClient } from '@/lib/mongo-client';
+import { authClient, authDb, getAuthDb } from '@/lib/mongo-client';
 import { sendEmail } from '@/lib/email';
 import { runAfter } from '@/lib/background';
 import { ac, roles } from '@/lib/auth/permissions';
@@ -119,8 +119,8 @@ async function syncSuperAdminRole(context: RoleSyncContext, userId: string) {
 }
 
 export const auth = betterAuth({
-    database: mongodbAdapter(getAuthDb(), {
-        client: useTransactions ? getMongoClient() : undefined,
+    database: mongodbAdapter(authDb, {
+        client: useTransactions ? authClient : undefined,
         transaction: useTransactions,
     }),
     trustedOrigins: process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : [],

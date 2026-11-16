@@ -41,7 +41,13 @@ export function getMongoClient(): MongoClient {
         const uri = process.env.MONGODB_URI;
         if (!uri) console.error('MONGODB_URI is not set. Define it in .env.local; auth requests will fail until you do.');
         // The driver connects lazily on the first operation, so importing this costs nothing.
-        globalThis.mongoClient = new MongoClient(uri || MISSING_URI_PLACEHOLDER, options);
+        const client = new MongoClient(uri || MISSING_URI_PLACEHOLDER, options);
+        // A failed first connect closes the client for good: every later operation throws
+        // "Topology is closed". Forget it so the next call builds a fresh one.
+        client.once('topologyClosed', () => {
+            if (globalThis.mongoClient === client) globalThis.mongoClient = undefined;
+        });
+        globalThis.mongoClient = client;
     }
     return globalThis.mongoClient;
 }
@@ -50,3 +56,19 @@ export function getMongoClient(): MongoClient {
 export function getAuthDb(): Db {
     return getMongoClient().db();
 }
+
+// Better Auth is handed its db and client once, at module load. These handles resolve
+// the current client on every call, so auth keeps working after a closed client is replaced.
+// The adapter only uses `db.collection()` and `client.startSession()`.
+function liveHandle<T extends object>(current: () => T): T {
+    return new Proxy({} as T, {
+        get(_target, prop) {
+            const target = current();
+            const value = Reflect.get(target, prop, target);
+            return typeof value === 'function' ? value.bind(target) : value;
+        },
+    });
+}
+
+export const authDb: Db = liveHandle(getAuthDb);
+export const authClient: MongoClient = liveHandle(getMongoClient);
