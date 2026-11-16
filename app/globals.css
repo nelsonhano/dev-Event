@@ -1,0 +1,908 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+    --color-blue: #94eaff;
+    --color-light-100: #e7f2ff;
+    --color-light-200: #bdbdbd;
+    --color-border-dark: #151024;
+    --color-dark-100: #0d161a;
+    --color-dark-200: #182830;
+    --radius: 0.625rem;
+    --background: #030708;
+    --foreground: #ffffff;
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: #59deca;
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-blue: var(--color-blue);
+    --color-light-100: var(--color-light-100);
+    --color-light-200: var(--color-light-200);
+    --color-border-dark: var(--color-border-dark);
+    --color-dark-100: var(--color-dark-100);
+    --color-dark-200: var(--color-dark-200);
+    --font-schibsted-grotesk: var(--font-schibsted-grotesk);
+    --font-martian-mono: var(--font-martian-mono);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+}
+
+@utility flex-center {
+    @apply flex items-center justify-center;
+}
+
+@utility text-gradient {
+    @apply to-blue bg-gradient-to-b from-white via-white bg-clip-text font-semibold text-transparent;
+}
+
+@utility glass {
+    @apply bg-[#12121280]/50 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl border-b border-border-dark;
+}
+
+@utility card-shadow {
+    box-shadow: 0px 4px 40px 0px #00000066;
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+
+    main {
+        @apply mx-auto container flex flex-col sm:px-10 px-5 py-10;
+    }
+
+    h1 {
+        @apply text-gradient text-6xl font-semibold max-sm:text-4xl;
+    }
+
+    h3 {
+        @apply font-schibsted-grotesk text-2xl font-bold;
+    }
+
+    ul {
+        @apply list-disc list-inside;
+    }
+}
+
+@layer components {
+    #home {
+        .subheading {
+            @apply text-light-100 text-lg max-sm:text-sm text-center mt-5;
+        }
+    }
+
+    #explore-btn {
+        @apply border-dark-200 bg-dark-100 flex w-fit cursor-pointer  rounded-full border px-8 py-3.5 max-sm:w-full text-center;
+
+        a {
+            @apply flex-center gap-2 text-center w-full;
+        }
+    }
+
+    header {
+        @apply glass sticky top-0 z-50;
+
+        nav {
+            @apply flex flex-row justify-between mx-auto container sm:px-10 px-5 py-4;
+        }
+
+        .logo {
+            @apply flex flex-row items-center gap-2;
+
+            p {
+                @apply text-xl font-bold italic max-sm:hidden;
+            }
+        }
+
+        ul {
+            @apply flex flex-row items-center gap-6 max-sm:gap-4 max-sm:text-sm;
+        }
+
+        /* The logo already links home, so small screens drop the Home link to fit the account control. */
+        .nav-home {
+            @apply max-sm:hidden;
+        }
+
+        .nav-auth {
+            @apply list-none;
+        }
+    }
+
+    .events {
+        @apply grid md:grid-cols-3 gap-10 sm:grid-cols-2 grid-cols-1;
+    }
+
+    #event-card {
+        @apply flex flex-col gap-3;
+
+        .poster {
+            @apply h-[300px] w-full rounded-lg object-cover;
+        }
+
+        .title {
+            @apply text-[20px] font-semibold line-clamp-1;
+        }
+
+        p {
+            @apply text-light-200 text-sm font-light;
+        }
+
+        .datetime {
+            @apply text-light-200 flex flex-row flex-wrap items-center gap-4;
+
+            div {
+                @apply flex flex-row gap-2;
+            }
+        }
+    }
+
+    #event {
+        .header {
+            @apply flex w-2/3 flex-col items-start gap-4 max-lg:w-full mb-10;
+        }
+
+        .details {
+            @apply flex w-full flex-col lg:flex-row gap-12 items-start mt-12 max-lg:items-center;
+
+            .content {
+                @apply flex flex-[2] flex-col gap-8 max-lg:w-full;
+
+                .banner {
+                    @apply max-h-[457px] w-full rounded-lg object-cover;
+                }
+
+                .agenda {
+                    @apply flex flex-col gap-2;
+
+                    ul {
+                        li {
+                            @apply text-light-100 text-lg max-sm:text-sm;
+                        }
+                    }
+                }
+            }
+
+            .booking {
+                @apply flex-1 w-full p-4 border-l border-gray-700;
+
+                .signup-card {
+                    @apply bg-dark-100 border-dark-200 card-shadow flex w-full flex-col gap-6 rounded-[10px] border px-5 py-6;
+                }
+            }
+        }
+
+        h2 {
+            @apply font-schibsted-grotesk text-2xl font-bold;
+        }
+
+        p {
+            @apply text-light-100 text-lg max-sm:text-sm;
+        }
+
+        .flex-col-gap-2 {
+            @apply flex flex-col gap-2;
+        }
+
+        .flex-row-gap-2 {
+            @apply flex flex-row gap-2;
+        }
+    }
+
+    .pill {
+        @apply bg-dark-100 text-light-100 text-xs rounded-[6px] px-5 py-2;
+    }
+
+    #create-event-page {
+        @apply mx-auto flex w-full max-w-3xl flex-col gap-10;
+
+        .header {
+            @apply flex flex-col gap-4;
+
+            p {
+                @apply text-light-100 text-lg max-sm:text-sm;
+            }
+        }
+    }
+
+    #create-event {
+        @apply flex flex-col gap-8;
+
+        fieldset {
+            @apply bg-dark-100 border-dark-200 card-shadow flex min-w-0 flex-col gap-5 rounded-[10px] border px-5 py-6 disabled:opacity-70;
+        }
+
+        legend {
+            @apply font-schibsted-grotesk float-left mb-1 w-full text-xl font-bold;
+        }
+
+        .row {
+            @apply grid grid-cols-1 gap-5 sm:grid-cols-2;
+        }
+
+        .field {
+            @apply flex min-w-0 flex-col gap-2;
+
+            label {
+                @apply text-light-100 text-sm font-semibold;
+            }
+
+            input, textarea, select {
+                @apply bg-dark-200 w-full rounded-[6px] border border-transparent px-5 py-2.5 focus-visible:border-primary focus-visible:outline-none;
+            }
+
+            input[type="file"] {
+                @apply file:bg-primary cursor-pointer px-2 file:mr-4 file:cursor-pointer file:rounded-[4px] file:border-0 file:px-3 file:py-1 file:font-semibold file:text-black;
+            }
+
+            [aria-invalid="true"] {
+                @apply border-red-400;
+            }
+
+            .hint {
+                @apply text-light-200 text-xs;
+            }
+
+            .preview {
+                @apply mt-2 max-h-64 w-full rounded-lg object-cover;
+            }
+        }
+
+        .field-error {
+            @apply text-sm text-red-400;
+        }
+
+        button[type="submit"] {
+            @apply bg-primary hover:bg-primary/90 w-full cursor-pointer rounded-[6px] px-4 py-3 text-lg font-semibold text-black disabled:cursor-wait disabled:opacity-70;
+        }
+    }
+
+    /* Organiser auth pages (spec 0001): sign in, sign up, password reset, verify email */
+    #auth-page {
+        @apply mx-auto grid w-full max-w-5xl grid-cols-1 items-start gap-10 lg:grid-cols-[1fr_minmax(0,440px)] lg:gap-16 lg:pt-6;
+
+        > * {
+            @apply min-w-0;
+        }
+
+        .pitch {
+            @apply flex flex-col gap-6 max-lg:order-2;
+
+            h1 {
+                @apply text-5xl max-sm:text-4xl;
+            }
+
+            > p {
+                @apply text-light-100 text-lg max-sm:text-base;
+            }
+
+            ul {
+                @apply flex list-none flex-col gap-4;
+            }
+
+            li {
+                @apply bg-dark-100/60 border-dark-200 flex items-start gap-3 rounded-[10px] border px-4 py-3.5;
+
+                svg {
+                    @apply text-primary mt-0.5 size-5 shrink-0;
+                }
+
+                strong {
+                    @apply block text-sm font-semibold;
+                }
+
+                span {
+                    @apply text-light-200 text-sm;
+                }
+            }
+        }
+
+        .auth-card {
+            @apply bg-dark-100 border-dark-200 card-shadow flex w-full flex-col gap-6 rounded-[10px] border px-6 py-7 max-sm:px-5;
+
+            .card-header {
+                @apply flex flex-col gap-1.5;
+
+                h2 {
+                    @apply font-schibsted-grotesk text-2xl font-bold;
+                }
+
+                p {
+                    @apply text-light-200 text-sm;
+                }
+            }
+        }
+
+        .social {
+            @apply grid grid-cols-2 gap-3 max-[380px]:grid-cols-1;
+
+            button {
+                @apply bg-dark-200 border-dark-200 hover:border-primary/60 flex cursor-pointer items-center justify-center gap-2 rounded-[6px] border px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-wait disabled:opacity-60;
+
+                svg {
+                    @apply size-4;
+                }
+            }
+        }
+
+        .divider {
+            @apply text-light-200 flex items-center gap-3 text-xs uppercase tracking-wider;
+
+            &::before, &::after {
+                @apply bg-dark-200 h-px flex-1 content-[''];
+            }
+        }
+
+        form {
+            @apply flex flex-col gap-5;
+        }
+
+        .field {
+            @apply flex min-w-0 flex-col gap-2;
+
+            .label-row {
+                @apply flex items-center justify-between gap-2;
+
+                a {
+                    @apply text-primary text-xs hover:underline;
+                }
+            }
+
+            label {
+                @apply text-light-100 text-sm font-semibold;
+            }
+
+            input {
+                @apply bg-dark-200 w-full rounded-[6px] border border-transparent px-4 py-2.5 focus-visible:border-primary focus-visible:outline-none;
+            }
+
+            [aria-invalid="true"] {
+                @apply border-red-400;
+            }
+
+            .hint {
+                @apply text-light-200 text-xs;
+            }
+        }
+
+        .field-error {
+            @apply text-sm text-red-400;
+        }
+
+        .form-alert {
+            @apply rounded-[6px] border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-200;
+        }
+
+        .ban-panel {
+            @apply flex flex-col gap-1;
+        }
+
+        .form-success {
+            @apply border-primary/40 bg-primary/10 text-light-100 rounded-[6px] border px-4 py-3 text-sm;
+        }
+
+        button[type="submit"] {
+            @apply bg-primary hover:bg-primary/90 w-full cursor-pointer rounded-[6px] px-4 py-3 text-base font-semibold text-black disabled:cursor-wait disabled:opacity-70;
+        }
+
+        .switch {
+            @apply text-light-200 text-center text-sm;
+
+            a {
+                @apply text-primary font-semibold hover:underline;
+            }
+        }
+    }
+
+    /* Navbar account menu (spec 0001, AC-22) */
+    #user-menu {
+        @apply relative;
+
+        > button {
+            @apply bg-dark-100 border-dark-200 hover:border-primary/60 flex cursor-pointer items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-sm transition-colors;
+
+            .avatar {
+                @apply bg-primary flex size-7 items-center justify-center rounded-full text-xs font-bold uppercase text-black;
+            }
+        }
+
+        [role="menu"] {
+            @apply bg-dark-100 border-dark-200 card-shadow absolute right-0 top-full mt-2 flex min-w-52 list-none flex-col rounded-[10px] border p-1.5;
+
+            .who {
+                @apply border-dark-200 mb-1 border-b px-3 pb-2 pt-1.5;
+
+                p {
+                    @apply truncate text-sm font-semibold;
+                }
+
+                span {
+                    @apply text-light-200 block truncate text-xs;
+                }
+            }
+
+            a, button {
+                @apply hover:bg-dark-200 focus-visible:bg-dark-200 block w-full cursor-pointer rounded-[6px] px-3 py-2 text-left text-sm focus-visible:outline-none;
+            }
+        }
+    }
+
+    .nav-signin {
+        @apply bg-primary hover:bg-primary/90 rounded-full px-4 py-1.5 text-sm font-semibold text-black;
+    }
+
+    /* Organiser dashboard (spec 0001, AC-10), shared by the admin console */
+    #dashboard, #admin {
+        @apply mx-auto flex w-full max-w-4xl flex-col gap-8;
+
+        .header {
+            @apply flex flex-wrap items-end justify-between gap-4;
+
+            p {
+                @apply text-light-100 mt-2 text-lg max-sm:text-sm;
+            }
+        }
+
+        .create-btn {
+            @apply bg-primary hover:bg-primary/90 flex w-fit items-center gap-2 rounded-[6px] px-4 py-2.5 font-semibold text-black;
+
+            svg {
+                @apply size-4;
+            }
+        }
+
+        .empty {
+            @apply bg-dark-100 border-dark-200 card-shadow flex flex-col items-center gap-3 rounded-[10px] border px-6 py-14 text-center;
+
+            > svg {
+                @apply text-primary size-10;
+            }
+
+            h2 {
+                @apply font-schibsted-grotesk text-2xl font-bold;
+            }
+
+            p {
+                @apply text-light-200 mb-3 max-w-md text-sm;
+            }
+        }
+
+        .own-events {
+            @apply bg-dark-100 border-dark-200 card-shadow flex list-none flex-col rounded-[10px] border;
+
+            li {
+                @apply border-dark-200 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b px-5 py-4 last:border-b-0;
+            }
+
+            /* At least 14rem, so on a phone the actions wrap below instead of squeezing the title. */
+            .info {
+                @apply min-w-0 flex-1 basis-56;
+            }
+
+            .title {
+                @apply truncate font-semibold;
+            }
+
+            .meta {
+                @apply text-light-200 text-sm;
+            }
+
+            .count {
+                @apply text-light-100;
+            }
+
+            .row-actions {
+                @apply flex flex-wrap items-center gap-x-4 gap-y-2 text-sm;
+
+                > a {
+                    @apply text-primary font-semibold hover:underline;
+                }
+            }
+        }
+
+        .back {
+            @apply text-light-200 hover:text-light-100 -mb-4 flex w-fit items-center gap-1.5 text-sm;
+
+            svg {
+                @apply size-4;
+            }
+        }
+
+        .pager {
+            @apply flex items-center justify-between gap-4 text-sm;
+
+            a, span[aria-disabled] {
+                @apply flex items-center gap-1 rounded-[6px] px-3 py-2;
+
+                svg {
+                    @apply size-4;
+                }
+            }
+
+            a {
+                @apply bg-dark-100 border-dark-200 hover:border-primary/60 border font-semibold;
+            }
+
+            span[aria-disabled] {
+                @apply text-light-200/50;
+            }
+
+            .where {
+                @apply text-light-200;
+            }
+        }
+
+        /* relative: makes this the containing block, so absolutely positioned bits (the sr-only
+           caption) are clipped by the scroll box instead of widening the page on phones. */
+        .table-wrap {
+            @apply bg-dark-100 border-dark-200 card-shadow relative overflow-x-auto rounded-[10px] border;
+        }
+
+        .bookings {
+            @apply w-full text-left text-sm;
+
+            th {
+                @apply text-light-200 border-dark-200 border-b px-5 py-3 text-xs font-semibold uppercase tracking-wider;
+            }
+
+            td {
+                @apply border-dark-200 border-b px-5 py-3;
+            }
+
+            tr:last-child td {
+                @apply border-b-0;
+            }
+
+            time {
+                @apply text-light-200 font-martian-mono text-xs whitespace-nowrap;
+            }
+        }
+    }
+
+    /* Admin console (spec 0001, AC-16 to AC-20) */
+    #admin {
+        @apply max-w-5xl;
+
+        .admin-head {
+            @apply flex flex-wrap items-end justify-between gap-4;
+
+            .eyebrow {
+                @apply text-primary mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider;
+
+                svg {
+                    @apply size-4;
+                }
+            }
+        }
+
+        .admin-tabs {
+            @apply bg-dark-100 border-dark-200 flex gap-1 rounded-full border p-1 text-sm;
+
+            a {
+                @apply text-light-200 hover:text-light-100 rounded-full px-4 py-1.5 font-semibold;
+            }
+
+            a[aria-current="page"] {
+                @apply bg-primary text-black hover:text-black;
+            }
+        }
+
+        .admin-search {
+            @apply bg-dark-100 border-dark-200 focus-within:border-primary/60 flex items-center gap-2 rounded-[10px] border py-1.5 pl-4 pr-1.5;
+
+            > svg {
+                @apply text-light-200 size-4 shrink-0;
+            }
+
+            input {
+                @apply min-w-0 flex-1 bg-transparent py-1.5 text-sm focus-visible:outline-none;
+            }
+
+            button {
+                @apply bg-primary hover:bg-primary/90 cursor-pointer rounded-[6px] px-4 py-1.5 text-sm font-semibold text-black;
+            }
+        }
+
+        .admin-count {
+            @apply text-light-200 -mt-4 text-sm;
+        }
+
+        /* Wide enough that columns don't crush on phones; the wrapper scrolls instead. */
+        .admin-table {
+            @apply w-full min-w-[640px] text-left text-sm;
+
+            th {
+                @apply text-light-200 border-dark-200 border-b px-4 py-3 text-xs font-semibold uppercase tracking-wider;
+            }
+
+            td {
+                @apply border-dark-200 border-b px-4 py-3 align-top;
+            }
+
+            tr:last-child td {
+                @apply border-b-0;
+            }
+
+            .name {
+                @apply font-semibold;
+            }
+
+            .sub, .sub-cell {
+                @apply text-light-200 text-xs;
+            }
+
+            .reason {
+                @apply mt-1 max-w-56 break-words italic;
+            }
+
+            .num {
+                @apply tabular-nums;
+            }
+
+            .row-mod {
+                @apply flex items-start justify-end gap-2;
+            }
+
+            time {
+                @apply text-light-200 font-martian-mono text-xs whitespace-nowrap;
+            }
+        }
+
+        .role-pill, .status, .action-pill {
+            @apply inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap capitalize;
+        }
+
+        .role-pill {
+            @apply bg-dark-200 text-light-100;
+
+            &.admin {
+                @apply bg-blue/15 text-blue;
+            }
+
+            &.superadmin {
+                @apply bg-primary/15 text-primary;
+            }
+        }
+
+        .status.active, .action-pill.grant, .action-pill.unban {
+            @apply bg-primary/15 text-primary;
+        }
+
+        .status.banned, .action-pill.ban, .action-pill.revoke, .action-pill.delete {
+            @apply bg-red-400/15 text-red-300;
+        }
+
+        .action-pill.update {
+            @apply bg-blue/15 text-blue;
+        }
+
+        .admin-columns {
+            @apply grid grid-cols-1 gap-8 lg:grid-cols-2;
+
+            > section {
+                @apply flex min-w-0 flex-col gap-4;
+            }
+
+            h2 {
+                @apply font-schibsted-grotesk text-xl font-bold;
+            }
+
+            .admin-count {
+                @apply mt-0;
+            }
+        }
+
+        .people {
+            @apply bg-dark-100 border-dark-200 card-shadow flex list-none flex-col rounded-[10px] border;
+
+            li {
+                @apply border-dark-200 flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3 last:border-b-0;
+            }
+
+            .name {
+                @apply font-semibold;
+            }
+
+            .sub {
+                @apply text-light-200 text-xs;
+            }
+        }
+
+        .empty.small {
+            @apply py-8;
+
+            > svg {
+                @apply size-7;
+            }
+        }
+    }
+
+    .mod-action {
+        @apply inline-flex flex-col items-end gap-1;
+    }
+
+    .mod-btn {
+        @apply bg-dark-200 hover:bg-dark-200/70 inline-flex cursor-pointer items-center gap-1.5 rounded-[6px] px-3 py-1.5 text-xs font-semibold disabled:cursor-wait disabled:opacity-60;
+
+        svg {
+            @apply size-3.5;
+        }
+
+        &.danger {
+            @apply text-red-300 hover:text-red-200;
+        }
+    }
+
+    .mod-error {
+        @apply max-w-56 text-right text-xs text-red-300;
+    }
+
+    .ban-form {
+        @apply flex flex-col gap-2;
+
+        label {
+            @apply text-light-100 mt-2 text-sm font-semibold;
+        }
+
+        textarea, input {
+            @apply bg-dark-200 w-full rounded-[6px] border border-transparent px-4 py-2.5 text-sm focus-visible:border-primary focus-visible:outline-none;
+        }
+
+        input {
+            color-scheme: dark;
+        }
+
+        .hint {
+            @apply text-light-200 mb-2 text-xs;
+        }
+    }
+
+    .delete-trigger {
+        @apply flex cursor-pointer items-center gap-1.5 font-semibold text-red-300 hover:text-red-200;
+
+        svg {
+            @apply size-4;
+        }
+    }
+
+    /* Its own alignment and wrapping, since it can sit inside a right aligned table cell. */
+    .confirm-dialog {
+        @apply bg-dark-100 border-dark-200 card-shadow text-foreground m-auto w-[min(440px,calc(100vw-32px))] rounded-[10px] border p-6 text-left whitespace-normal;
+
+        &::backdrop {
+            @apply bg-black/70 backdrop-blur-sm;
+        }
+
+        h2 {
+            @apply font-schibsted-grotesk mb-2 text-xl font-bold;
+        }
+
+        p {
+            @apply text-light-100 mb-4 text-sm;
+        }
+
+        .form-alert {
+            @apply rounded-[6px] border border-red-400/40 bg-red-400/10 px-4 py-3 text-red-200;
+        }
+
+        .actions {
+            @apply flex justify-end gap-3;
+
+            button {
+                @apply cursor-pointer rounded-[6px] px-4 py-2 text-sm font-semibold disabled:cursor-wait disabled:opacity-60;
+            }
+
+            .secondary {
+                @apply bg-dark-200 hover:bg-dark-200/70;
+            }
+
+            .danger {
+                @apply bg-red-500 text-white hover:bg-red-500/90;
+            }
+        }
+    }
+
+    /* Unverified email notice (spec 0001, AC-4) */
+    .verify-notice {
+        @apply border-primary/40 bg-primary/10 flex flex-wrap items-center justify-between gap-3 rounded-[10px] border px-5 py-4;
+
+        p {
+            @apply text-light-100 text-sm;
+        }
+
+        button {
+            @apply border-primary text-primary hover:bg-primary/10 cursor-pointer rounded-[6px] border px-3 py-1.5 text-sm font-semibold disabled:cursor-wait disabled:opacity-60;
+        }
+
+        .status {
+            @apply text-light-200 w-full text-xs;
+        }
+    }
+
+    #book-event {
+        @apply flex flex-col gap-6;
+
+        form {
+            @apply flex flex-col gap-6;
+
+            div {
+                @apply flex flex-col gap-2;
+
+                input {
+                    @apply bg-dark-200 rounded-[6px] px-5 py-2.5;
+                }
+            }
+
+            button {
+                @apply bg-primary hover:bg-primary/90 w-full cursor-pointer items-center justify-center rounded-[6px] px-4 py-2.5 text-lg font-semibold text-black;
+            }
+        }
+    }
+}

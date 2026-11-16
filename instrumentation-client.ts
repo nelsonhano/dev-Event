@@ -1,0 +1,14 @@
+import posthog from "posthog-js"
+
+const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+
+// Only start PostHog when a key is configured, so local runs without one stay quiet.
+if (posthogKey) {
+  posthog.init(posthogKey, {
+    api_host: "/ingest",
+    ui_host: "https://us.posthog.com",
+    defaults: '2025-05-24',
+    capture_exceptions: true, // This enables capturing exceptions using Error Tracking, set to false if you don't want this
+    debug: process.env.NODE_ENV === "development",
+  });
+}
